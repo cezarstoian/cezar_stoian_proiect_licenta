@@ -6,6 +6,9 @@ import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGoogle } from "react-icons/bs";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -37,18 +40,42 @@ const AuthForm = () => {
     setIsLoading(true)
 
     if (variant === "REGISTER") {
-      // Axios Registe
+      axios.post('/api/register', data).catch(() => toast.error('Ceva nu a funcționat!'))
+      .finally(() => setIsLoading(false))
     }
 
     if (variant === "LOGIN") {
-      // NextAuth SignIn
+      signIn('credentials', {
+        ...data,
+        redirect: false
+      })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error('Credențiale greșite!')
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success('Ai intrat în cont!')
+        }
+      })
+      .finally(() => setIsLoading(false))
     }
   }
 
   const socialAction = (action: string) => {
     setIsLoading(true)
 
-    // NextAuth Social SignIn
+    signIn(action, { redirect: false })
+    .then((callback) => {
+      if (callback?.error) {
+        toast.error('Credențiale greșite!')
+      }
+
+      if (callback?.ok && !callback?.error) {
+        toast.success('Ai intrat în cont!')
+      }
+    })
+    .finally(() => setIsLoading(false))
   }
 
   return (
@@ -64,8 +91,8 @@ const AuthForm = () => {
             />
           )}
           <Input 
-              id="name"
-              label="Adresa de email sau numele de utilizator "
+              id="email"
+              label="Adresa de email"
               type="email"
               register={register} 
               errors={errors}
