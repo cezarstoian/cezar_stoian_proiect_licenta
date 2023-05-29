@@ -18,6 +18,8 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
 
   console.log({ currentUser, }, 'TEST')
 
+  const isAdmin = false;
+
   return ( 
     <>
       <div className="
@@ -46,6 +48,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                 icon={item.icon}
                 active={item.active}
                 onClick={item.onClick}
+                user={currentUser}
               />
             ))}
           </ul>

@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from "next/link";
+import { User } from "@prisma/client";
 
 interface DesktopItemProps {
   label: string;
@@ -7,6 +8,7 @@ interface DesktopItemProps {
   href: string;
   onClick?: () => void;
   active?: boolean;
+  user?: User;
 }
 
 const DesktopItem: React.FC<DesktopItemProps> = ({ 
@@ -14,7 +16,8 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
   href, 
   icon: Icon, 
   active,
-  onClick
+  onClick,
+  user,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -22,8 +25,11 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
     }
   };
 
+  const showAdminPage = (!(user?.role === 'admin') && (label === 'Admin'))
+  console.log(`SHOW ADMIN ${showAdminPage} for ${label}`)
+
   return ( 
-    <li onClick={handleClick} key={label}>
+    <li onClick={handleClick} key={label} hidden={showAdminPage}>
       <Link
         href={href}
         className={clsx(`
