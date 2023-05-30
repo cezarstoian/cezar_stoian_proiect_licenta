@@ -3,35 +3,40 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
-import axios from "axios";
 
 import Avatar from "@/app/components/Avatar";
+import UserModal from "./UserModal";
 
-interface UserBoxProps {
+interface UserBoxVerifyProps {
   data: User
 }
 
-const UserBox: React.FC<UserBoxProps> = ({ 
+const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({ 
   data
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (data: any) => {
+    setSelectedUser(data);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedUser(null);
+    setIsModalOpen(false);
+  };
+
   const handleClick = useCallback(() => {
     setIsLoading(true);
-
-    axios.post('/api/conversations', { userId: data.id })
-    .then((data) => {
-      router.push(`/conversations/${data.data.id}`);
-    })
-    .finally(() => setIsLoading(false));
-  }, [data, router]);
+    openModal(data)
+    // router.push('/admin')
+  }, [data]);
 
   return (
-    // <>
-    //   {isLoading && (
-    //     <LoadingModal />
-    //   )}
       <div
         onClick={handleClick}
         className="
@@ -59,9 +64,15 @@ const UserBox: React.FC<UserBoxProps> = ({
             </div>
           </div>
         </div>
+        {selectedUser && (
+          <UserModal
+            user={selectedUser}
+            isOpen={isModalOpen}
+            closeModal={closeModal}
+          />
+        )}
       </div>
-    // </>
   );
 }
  
-export default UserBox;
+export default UserBoxVerify;

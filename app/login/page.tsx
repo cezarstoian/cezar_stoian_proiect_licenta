@@ -17,7 +17,7 @@ export default function Home() {
     ">
       <IconLink icon={HiArrowLeftOnRectangle} href={'/home'} text={'Înapoi la pagina principală'} />
       <div className="sm:mx-auto sm:w-full sm:max-w-md"> 
-        <Image alt="Logo" height="48" width="48" className="mx-auto w-auto" src="/images/sitelogo.png" />
+        <Image alt="Logo" height="48" width="48" className="mx-auto w-auto" src="/images/site-logo.png" />
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Conectați-vă la contul dumneavoastră
         </h2>

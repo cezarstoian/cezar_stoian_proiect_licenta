@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Navbar from "../../components/navbar/Navbar";
 import IconLink from "../../components/IconLink";
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2';
 
