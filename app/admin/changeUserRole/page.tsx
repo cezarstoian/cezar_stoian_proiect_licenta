@@ -1,8 +1,12 @@
 
 import IconLink from "../../components/IconLink";
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2';
+import UserTable from "./components/UserTable";
+import getUsers from "@/app/actions/getUsers";
 
-export default function AddUser() {
+export default async function ChangeUserRole() {
+  const users = await getUsers()
+
   return (
     <div className="
       flex 
@@ -13,9 +17,13 @@ export default function AddUser() {
       lg:px-8 
       bg-gray-100
     ">
-
       Schimbă rolul unui utilizator
-      <IconLink icon={HiArrowLeftOnRectangle} href={'/admin'} text={'Înapoi la pagina de administrare'} />     
+      <div>
+        <UserTable items={users} />
+      </div>
+      <div className="fixed bottom-0 px-5">
+        <IconLink icon={HiArrowLeftOnRectangle} href={'/admin'} text={'Înapoi la pagina de administrare'} />
+      </div>
     </div>
   )
 }
