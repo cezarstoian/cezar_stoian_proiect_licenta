@@ -14,7 +14,7 @@ export default function AddUser() {
       bg-gray-100
     ">
 
-      Adaugă un administrator/contabil
+      Schimbă rolul unui utilizator
       <IconLink icon={HiArrowLeftOnRectangle} href={'/admin'} text={'Înapoi la pagina de administrare'} />     
     </div>
   )

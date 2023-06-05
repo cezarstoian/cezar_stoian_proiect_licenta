@@ -22,7 +22,7 @@ export default function Admin() {
 
     Pagina de administrator
 
-    <IconLink icon={FaUser} href={'/admin/addUser'} text={'Adaugă un administrator/contabil'}/>
+    <IconLink icon={FaUser} href={'/admin/changeUserRole'} text={'Schimbă rolul unui utilizator'}/>
     <IconLink icon={IoMdCheckmarkCircleOutline} href={'/admin/approve'} text={'Verifică datele unui utilizator'}/>
     <IconLink icon={AiOutlineSchedule} href={'/admin/schedule'} text={'Programează o întâlnire'}/>
     <IconLink icon={HiArrowLeftOnRectangle} href={'/users'} text={'Înapoi la conversații'} />

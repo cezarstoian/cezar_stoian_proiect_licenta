@@ -28,12 +28,11 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
   const closeModal = () => {
     setSelectedUser(null);
     setIsModalOpen(false);
+    router.refresh();
   };
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-    // openModal(data)
-    // router.push('/admin')
   }, [data]);
 
   return (
