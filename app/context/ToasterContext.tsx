@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 
 const ToasterContext = () => {
   return (
-    <Toaster position="top-left" />
+    <Toaster position="top-center" />
   )
 }
 

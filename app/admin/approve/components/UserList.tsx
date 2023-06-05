@@ -5,6 +5,7 @@ import UserBox from "./UserBox";
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2';
 import IconLink from "@/app/components/IconLink";
 import { useState } from "react";
+import UserModal from "./UserModal";
 
 interface UserListVerifyProps {
   items: User[],

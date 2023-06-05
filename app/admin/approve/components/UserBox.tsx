@@ -20,8 +20,8 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (data: any) => {
-    setSelectedUser(data);
+  const openModal = (item: any) => {
+    setSelectedUser(item);
     setIsModalOpen(true);
   };
 
@@ -32,11 +32,12 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-    openModal(data)
+    // openModal(data)
     // router.push('/admin')
   }, [data]);
 
   return (
+    <div>
       <div
         onClick={handleClick}
         className="
@@ -64,14 +65,20 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
             </div>
           </div>
         </div>
-        {selectedUser && (
-          <UserModal
-            user={selectedUser}
-            isOpen={isModalOpen}
-            closeModal={closeModal}
-          />
-        )}
+        
       </div>
+      <div>
+        <button onClick={() => openModal(data)}>Verifică utilizatorul</button>
+      </div>
+      {selectedUser && (
+        <UserModal
+          user={selectedUser}
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+        />
+      )}
+    </div>
+      
   );
 }
  

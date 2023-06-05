@@ -1,7 +1,6 @@
 import getInactiveUsers from "@/app/actions/getInactiveUsers";
 import UserList from "./components/UserList";
 
-
 export default async function UserVerifyLayout({
   children
 }: {
