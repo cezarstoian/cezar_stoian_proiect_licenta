@@ -35,6 +35,7 @@ export async function POST(
       },
       data: {
         isEnabled: approve,
+        acceptedCollaboration: approve,
       }
     });
     console.log("UserValidation", userValidation)
