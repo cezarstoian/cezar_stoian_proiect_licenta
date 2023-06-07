@@ -21,7 +21,7 @@ export default async function ChangeUserRole() {
       <div>
         <UserTable items={users} />
       </div>
-      <div className="fixed bottom-0 px-5">
+      <div className="fixed bottom-0 mx-auto">
         <IconLink icon={HiArrowLeftOnRectangle} href={'/admin'} text={'Înapoi la pagina de administrare'} />
       </div>
     </div>

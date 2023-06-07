@@ -1,6 +1,5 @@
 import { IconType } from "react-icons";
 import Link from "next/link";
-import clsx from "clsx";
 
 interface IconLinkProps {
   icon: IconType;
