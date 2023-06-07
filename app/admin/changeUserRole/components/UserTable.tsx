@@ -39,6 +39,12 @@ const UserTable: React.FC<UserListRoles> = ({
     }));
   };
   
+  const sendEmail = (user: User, subject: string, content: string) => {
+    const body = { subject, content, user }
+    axios.post('/api/mailjet', body)
+    .then(() => console.log('Email trimis pentru:', user.name))
+  }
+  
   const changeRole = (user: User) => {
     var newRole = ''
     usersData.map((item) => {
@@ -46,10 +52,15 @@ const UserTable: React.FC<UserListRoles> = ({
         newRole = item.role
       }
     })
+
+    const subject = 'Rol modificat'
+    const content = `Bună ziua, ${user?.name}! Rolul dumneavoastră a fost modificat din ${user.role} în ${newRole}. Vă mulțumim pentru înțelegere!`
+
     const body = { user, newRole }
     console.log(newRole)
     axios.post('/api/admin/updateRole', body)
       .then(() => {
+        sendEmail(user, subject, content)
         toast.success('Rol schimbat cu succes!.')
       })
       .catch(() => toast.error('Ceva nu a funcționat!'))
@@ -57,8 +68,12 @@ const UserTable: React.FC<UserListRoles> = ({
   }
 
   const deleteUser = (user: User) => {
+    const subject = 'Cont șters'
+    const content = `Bună ziua, ${user?.name}! Contul dumneavoastră a fost șters. Vă mulțumim pentru înțelegere!`
+
     axios.delete(`/api/admin/${user.id}`)
       .then(() => {
+        sendEmail(user, subject, content)
         toast.success('Utilizator șters cu succes!')
       })
       .catch(() => toast.error('Ceva nu a funcționat!'))

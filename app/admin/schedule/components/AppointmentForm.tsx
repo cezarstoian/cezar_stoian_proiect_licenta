@@ -4,6 +4,9 @@ import { User } from "@prisma/client";
 import UserSelect from "./UserSelect";
 import CalendarSelect from "./CalendarSelect";
 import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 
 interface UserListRoles {
   users: User[],
@@ -23,17 +26,19 @@ const AppointmentForm: React.FC<UserListRoles> = ({
     setSelectedDatetime(data)
   }
 
-  const sendAppointment = () => {
-    // send email there
-    console.log("salute")
-    console.log(selectedUser)
-    console.log(selectedDatetime)
-  }
+  const sendAppointment = (selectedUser: string, selectedDatetime: string) => {
+    var user: User | null = null
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].id === selectedUser) user = users[i]
+    }
+    const subject = 'Ședință programată'
+    const content = `Bună ziua, ${user?.name}! A fost stabilită o întâlnire la sediul firmei la data/ora: ${selectedDatetime}. Vă mulțumim pentru înțelegere!`
+    const body = { subject, content, user }
 
-  // const sendAppointment = (user: User) => {
-  //   // send email there
-  //   console.log("salute")
-  // }
+    axios.post('/api/mailjet', body)
+    .then(() => console.log('Email trimis catre:', user?.name))
+    .finally(() => toast.success('Ședință programată.'))
+  }
 
   return (
     <div className="
@@ -50,7 +55,7 @@ const AppointmentForm: React.FC<UserListRoles> = ({
       <div className="flex flex-col gap-5">
         <UserSelect users={users} onData={handleSelectedUser} />
         <CalendarSelect onData={handleSelectedDatetime} />
-        <button onClick={() => sendAppointment()} className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-md"> Programează </button>
+        <button onClick={() => sendAppointment(selectedUser, selectedDatetime)} className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-md"> Programează </button>
       </div>
     </div>
   )

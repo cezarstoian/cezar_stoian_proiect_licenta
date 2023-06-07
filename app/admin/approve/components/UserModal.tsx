@@ -31,16 +31,26 @@ const UserModal: React.FC<UserModalProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const subject = 'Aprobare utilizator'
+  const content = `Bună ziua, ${user.name}! Contul dumneavoastră a fost aprobat! Puteți să utilizați aplicația noastră!`
+
+  const sendEmail = (user: User, subject: string, content: string) => {
+    const body = { subject, content, user }
+    axios.post('/api/mailjet', body)
+    .then(() => console.log('Email trimis pentru:', user.name))
+  }
+
   const approveOrRejectUser = (user: User, approve: boolean = true) => {
     setIsLoading(true)
     const body = { user, approve }
 
     axios.post('/api/admin', body)
-      .then(() => {
-        setIsLoading(false)
-        toast.success('Utilizator verificat! Puteți închide fereastra.')
-      })
-      .catch(() => toast.error('Ceva nu a funcționat!'))
+    .then(() => {
+      sendEmail(user, subject, content)
+      setIsLoading(false)
+      toast.success('Utilizator verificat! Puteți închide fereastra.')
+    })
+    .catch(() => toast.error('Ceva nu a funcționat!'))
   }
 
   return (
