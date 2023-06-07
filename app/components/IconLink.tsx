@@ -19,7 +19,7 @@ const IconLink: React.FC<IconLinkProps> = ({
   return ( 
     <Link
       href={href}
-      className={clsx(`
+      className={`
         group 
         flex 
         gap-x-3 
@@ -31,8 +31,8 @@ const IconLink: React.FC<IconLinkProps> = ({
         text-gray-500 
         hover:text-black 
         hover:bg-gray-100
-          `,
-      )}
+        justify-center
+          `}
     >
       <Icon />
       {text}

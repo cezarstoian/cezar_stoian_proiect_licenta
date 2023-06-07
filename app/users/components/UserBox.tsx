@@ -6,6 +6,7 @@ import { User } from "@prisma/client";
 import axios from "axios";
 
 import Avatar from "@/app/components/Avatar";
+import toast from "react-hot-toast";
 
 interface UserBoxProps {
   data: User
@@ -24,6 +25,7 @@ const UserBox: React.FC<UserBoxProps> = ({
     .then((data) => {
       router.push(`/conversations/${data.data.id}`);
     })
+    .catch(() => toast.error('Ceva nu a funcționat!'))
     .finally(() => setIsLoading(false));
   }, [data, router]);
 

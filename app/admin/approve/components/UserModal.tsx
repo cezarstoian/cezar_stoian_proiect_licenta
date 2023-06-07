@@ -38,6 +38,7 @@ const UserModal: React.FC<UserModalProps> = ({
     const body = { subject, content, user }
     axios.post('/api/mailjet', body)
     .then(() => console.log('Email trimis pentru:', user.name))
+    .catch(() => toast.error('Ceva nu a funcționat!'))
   }
 
   const approveOrRejectUser = (user: User, approve: boolean = true) => {

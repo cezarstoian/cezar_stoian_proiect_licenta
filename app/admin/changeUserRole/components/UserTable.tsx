@@ -43,6 +43,7 @@ const UserTable: React.FC<UserListRoles> = ({
     const body = { subject, content, user }
     axios.post('/api/mailjet', body)
     .then(() => console.log('Email trimis pentru:', user.name))
+    .catch(() => toast.error('Ceva nu a funcționat!'))
   }
   
   const changeRole = (user: User) => {

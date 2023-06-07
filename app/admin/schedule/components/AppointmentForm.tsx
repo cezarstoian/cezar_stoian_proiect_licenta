@@ -37,6 +37,7 @@ const AppointmentForm: React.FC<UserListRoles> = ({
 
     axios.post('/api/mailjet', body)
     .then(() => console.log('Email trimis catre:', user?.name))
+    .catch(() => toast.error('Ceva nu a funcționat!'))
     .finally(() => toast.success('Ședință programată.'))
   }
 

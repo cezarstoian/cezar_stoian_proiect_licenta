@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -18,6 +19,13 @@ const AuthForm = () => {
   const router = useRouter()
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+
+  const sendEmail = (user: any, subject: string, content: string) => {
+    const body = { subject, content, user }
+    axios.post('/api/mailjet', body)
+    .then(() => console.log('Email trimis pentru:', user.name))
+    .catch(() => toast.error('Ceva nu a funcționat!'))
+  }
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
@@ -49,8 +57,15 @@ const AuthForm = () => {
     setIsLoading(true)
 
     if (variant === "REGISTER") {
+      const subject = 'Cont creat'
+      const content = `Bună ziua, ${data.name}! Contul dumneavoastră a fost creat! Trebuie să așteptați programarea pentru a vi se aproba contul!`
+
       axios.post('/api/register', data)
-      .then(() => signIn('credentials', data))
+      .then(() => {
+        sendEmail(data, subject, content)
+        router.push('/home')
+        toast.success('Cont creat, dar inactiv! Așteptați sa fie validat!')
+      })
       .catch(() => toast.error('Ceva nu a funcționat!'))
       .finally(() => setIsLoading(false))
     }
@@ -62,7 +77,7 @@ const AuthForm = () => {
       })
       .then((callback) => {
         if (callback?.error) {
-          toast.error('Credențiale greșite!')
+          toast.error('Credențiale greșite sau cont inactiv!')
         }
 
         if (callback?.ok && !callback?.error) {
@@ -80,7 +95,7 @@ const AuthForm = () => {
     signIn(action, { redirect: false })
     .then((callback) => {
       if (callback?.error) {
-        toast.error('Credențiale greșite!')
+        toast.error('Credențiale greșite sau cont inactiv!')
       }
 
       if (callback?.ok && !callback?.error) {
