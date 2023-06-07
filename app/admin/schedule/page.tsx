@@ -1,8 +1,6 @@
 import IconLink from "../../components/IconLink";
 import { HiArrowLeftOnRectangle } from 'react-icons/hi2';
-import CalendarSelect from "./components/CalendarSelect";
 import getNoCollaborationUsers from "@/app/actions/getNoCollaborationUsers";
-import UserSelect from "./components/UserSelect";
 import AppointmentForm from "./components/AppointmentForm";
 
 export default async function Schedule() {

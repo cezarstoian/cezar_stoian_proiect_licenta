@@ -1,7 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
-import clsx from "clsx";
-import Button from "@/app/components/Button";
 import IconLink from "../components/IconLink";
 import { AiOutlineSchedule } from 'react-icons/ai';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
