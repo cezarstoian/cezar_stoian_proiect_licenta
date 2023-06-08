@@ -19,7 +19,7 @@ const Navbar = ({
       space-x-11
       bg-white
       ">
-      <Image alt="Logo" height="40" width="40" className="mx-auto w-auto h-auto fixed left-12 flex items-center justify-center" src="/images/site-logo.png" />
+      <Image alt="Logo" height="40" width="40" className="mx-auto w-auto h-auto left-12 fixed items-center" src="/images/site-logo.png" />
       <Link
         href={'/home'}
         className={clsx(`
@@ -33,7 +33,7 @@ const Navbar = ({
             text-lg
           `,
           )}
-      >Despre noi</Link>
+      >De ce noi?</Link>
       <Link
         href={'/home/prices'}
         className={clsx(`
@@ -61,7 +61,7 @@ const Navbar = ({
             font-semibold 
           `,
           )}
-      >Contact</Link>
+      >Despre noi</Link>
       <IconLink icon={BsFillChatDotsFill} href={'/login'} />        
     </div>
   )
