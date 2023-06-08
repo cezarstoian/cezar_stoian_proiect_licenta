@@ -56,9 +56,11 @@ model Message {
   id             String                @id @default(cuid())
   body           String?
   image          String?
+  document       String?
   createdAt      DateTime              @default(now())
   conversationId String
   senderId       String
+  seen           Boolean?              @default(false)
   conversation   Conversation          @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   sender         User                  @relation(fields: [senderId], references: [id], onDelete: Cascade)
 
@@ -71,6 +73,7 @@ model ConversationsOnUsers {
   conversationId String
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  lastMessageAt  DateTime     @default(now())
 
   @@id([userId, conversationId])
   @@index([userId])

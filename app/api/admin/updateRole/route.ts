@@ -1,6 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
+// API to update the user's role
 export async function POST(
   request: Request,
 ) {

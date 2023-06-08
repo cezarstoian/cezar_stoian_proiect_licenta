@@ -5,6 +5,7 @@ interface IParams {
   userId?: string;
 }
 
+// API to DELETE a user by its id
 export async function DELETE(
   request: Request,
   { params }: { params: IParams }

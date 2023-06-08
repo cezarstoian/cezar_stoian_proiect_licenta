@@ -2,6 +2,8 @@
 
 import { User } from "@prisma/client";
 import UserBox from "./UserBox";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface UserListProps {
   items: User[],
@@ -10,6 +12,13 @@ interface UserListProps {
 const UserList: React.FC<UserListProps> = ({ 
   items, 
 }) => {
+  // Test button
+  // const callLeast = () => {
+  //   const body = { name: 'fasfasttttttttttttttttttttttttt'}
+  //   axios.post('/api/conversations', body)
+  //   .catch(() => toast.error('Ceva nu a funcționat klan!'))
+  // }
+
   return ( 
     <aside 
       className="
@@ -46,6 +55,7 @@ const UserList: React.FC<UserListProps> = ({
           />
         ))}
       </div>
+      {/* <button onClick={() => callLeast()}>Press</button> */}
     </aside>
   );
 }

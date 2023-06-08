@@ -2,7 +2,9 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import getLeastCasesAccountant from "@/app/actions/getLeastCasesAccountant";
 
+// API to create a new conversation/case
 export async function POST(
   request: Request,
 ) {
@@ -10,9 +12,6 @@ export async function POST(
     const currentUser = await getCurrentUser()
     const body = await request.json()
     const {
-      userId,
-      isGroup,
-      members,
       name,
     } = body
 
@@ -20,51 +19,41 @@ export async function POST(
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    if (isGroup && (!members || members.length < 2 || !name)) {
+    if (!name) {
       return new NextResponse('Invalid data', { status: 400 })
     }
 
-    if (isGroup) {
-      const newConversation = await prisma.conversation.create({
-        data: {
-          name,
-          isGroup,
-          users: {
-            connect: [
-              ...members.map((member: { value: string }) => ({
-                id: member.value
-              })),
-              {
-                id: currentUser.id
-              }
-            ]
-          }
-        },
-        include: {
-          users: true
+    const newConversation = await prisma.conversation.create({
+      data: {
+        name: name,
+      }
+    })
+
+    const conversationOnUser = await prisma.conversationsOnUsers.create({
+      data: 
+        {
+          userId: currentUser.id,
+          conversationId: newConversation.id,
         }
+    })
+    const leastCasesAccountant = await getLeastCasesAccountant()
+
+    if (leastCasesAccountant) {
+      const conversationOnUserAccountant = await prisma.conversationsOnUsers.create({
+        data: 
+          {
+            userId: leastCasesAccountant?.id,
+            conversationId: newConversation.id,
+          }
       })
-
-      return NextResponse.json(newConversation)
-    }
-
-    // const existingConversations = await prisma.conversation.findMany({
-    //   where: {
-    //     OR: [
-    //       {
-    //         userIds: {
-    //           equals: [currentUser.id, userId]
-    //         }
-    //       },
-    //       {
-    //         userIds: {
-    //           equals: [userId, currentUser.id]
-    //         }
-    //       }
-    //     ]
-    //   }
-    // })
-
+      const response = { 
+        newConversation: newConversation,
+        conversationOnUser: conversationOnUser,
+        conversationOnUserAccountant: conversationOnUserAccountant,
+      }
+      return NextResponse.json(response)
+    } 
+    return new NextResponse('Internal Error', { status: 500 });
   } catch (error) {
     return new NextResponse('Internal Error', { status: 500 });
   }

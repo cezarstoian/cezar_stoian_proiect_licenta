@@ -1,6 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
+// API to GET the unverified users
 export async function GET() {
   try {
     const users = await prisma.user.findMany({
@@ -19,6 +20,7 @@ export async function GET() {
   }
 }
 
+// API to update the user's isEnabled and acceptedCollaboration properties
 export async function POST(
   request: Request,
 ) {

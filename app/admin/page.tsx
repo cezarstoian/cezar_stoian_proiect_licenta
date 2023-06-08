@@ -35,7 +35,7 @@ export default function Admin() {
           <IconLink icon={AiOutlineSchedule} href={'/admin/schedule'} text={'Programează o întâlnire'}/>
         </div>
         <div className="border border-solid border-gray-500 rounded-md mb-4">
-          <IconLink icon={HiArrowLeftOnRectangle} href={'/users'} text={'Înapoi la conversații'} />
+          <IconLink icon={HiArrowLeftOnRectangle} href={'/conversations'} text={'Înapoi la conversații'} />
         </div>
       </div>
     </div>

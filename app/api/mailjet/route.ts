@@ -14,6 +14,7 @@ interface MailjetEmail {
   TextPart: string;
 }
 
+// API to send an email via MAILJET
 export async function POST(
   request: Request
 ) {

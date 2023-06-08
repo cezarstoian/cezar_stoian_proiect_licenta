@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
+// API to create a new user
 export async function POST(
   request: Request
 ) {
