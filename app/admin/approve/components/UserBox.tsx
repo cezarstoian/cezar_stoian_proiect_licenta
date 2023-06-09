@@ -33,7 +33,7 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-  }, [data]);
+  }, []);
 
   return (
     <div>
