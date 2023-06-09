@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaExclamationCircle } from 'react-icons/fa';
 import ConversationBox from "./ConversationBox";
+// import saveAs from "file-saver";
+// import axios from "axios";
 
 interface ConversationListProps {
   initialItems: ConversationOnUserExtraType[],
@@ -16,6 +18,13 @@ interface ConversationListProps {
 const ConversationList: React.FC<ConversationListProps> = ({
   initialItems
 }) => {
+  //   const handleDownloadButtonClick = async (filename: string) => {
+  //   try {
+  //     axios.get(`/api/aws/${filename}`)
+  //   } catch (err) {
+  //     console.error('Error downloading file from S3:', err);
+  //   }
+  // }
   const [items, setItems] = useState(initialItems)
 
   const router = useRouter()
@@ -56,6 +65,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           Niciun caz deschis
         </div>)}
       </div>
+      {/* <button onClick={() => handleDownloadButtonClick('logo.png')}>Press</button> */}
     </aside>
   )
 }

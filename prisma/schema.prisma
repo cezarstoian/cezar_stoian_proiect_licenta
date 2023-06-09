@@ -55,7 +55,6 @@ model Conversation {
 model Message {
   id             String                @id @default(cuid())
   body           String?
-  image          String?
   document       String?
   createdAt      DateTime              @default(now())
   conversationId String

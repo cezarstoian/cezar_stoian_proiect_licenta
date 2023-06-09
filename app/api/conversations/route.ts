@@ -54,7 +54,8 @@ export async function POST(
       return NextResponse.json(response)
     } 
     return new NextResponse('Internal Error', { status: 500 });
-  } catch (error) {
+  } catch (err) {
+    console.log("Conversation creation error", err)
     return new NextResponse('Internal Error', { status: 500 });
   }
 }

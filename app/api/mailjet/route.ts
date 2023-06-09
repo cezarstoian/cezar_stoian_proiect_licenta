@@ -52,8 +52,8 @@ export async function POST(
 
     
     return NextResponse.json(user)
-  } catch (err: any) {
-    console.log(err, "Email error")
+  } catch (err) {
+    console.log("Email sending error", err)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }

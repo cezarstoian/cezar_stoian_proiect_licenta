@@ -21,6 +21,7 @@ export async function DELETE(
 
     return NextResponse.json(deletedUser)
   } catch (err: any) {
-    return NextResponse.json(null);
+    console.log("User delete error", err)
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }

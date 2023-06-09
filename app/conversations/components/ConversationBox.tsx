@@ -6,7 +6,6 @@ import { Conversation, Message, User } from "@prisma/client";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
-import Avatar from "@/app/components/Avatar";
 import { ConversationOnUserExtraType } from "@/app/types";
 
 interface ConversationBoxProps {
@@ -43,7 +42,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   }, [userEmail, lastMessage])
 
   const lastMessageText = useMemo(() => {
-    if (lastMessage?.image || lastMessage?.document) return 'Imagine sau fișier'
+    if (lastMessage?.image) return 'S-a trimis o imagine'
+    if (lastMessage?.document) return lastMessage.document
 
     if (lastMessage?.body) return lastMessage.body
 

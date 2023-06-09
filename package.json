@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.348.0",
+    "@azure/storage-blob": "^12.14.0",
     "@chakra-ui/react": "^2.7.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
@@ -19,12 +21,14 @@
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
+    "aws-sdk": "^2.1394.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "file-saver": "^2.0.5",
     "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
     "next": "13.4.3",
@@ -42,6 +46,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/file-saver": "^2.0.5",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/react-modal": "^3.16.0",
     "prisma": "^4.14.1"

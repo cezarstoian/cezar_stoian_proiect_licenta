@@ -42,8 +42,8 @@ export async function POST(
     });
     console.log("UserValidation", userValidation)
     return NextResponse.json(userValidation)
-  } catch (err: any) {
-    console.log(err, "User validation error")
+  } catch (err) {
+    console.log("User validation error", err)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
