@@ -33,13 +33,10 @@ export async function POST(
 
     const formData = await request.formData()
     const filename = formData.get("filename")
+    const conversationId = formData.get("conversationId")
     const document = formData.get("document")
-    // const {
-    //   filename,
-    //   document,
-    // } = body
 
-    console.log("Api body", {filename, document})
+    console.log("Api body", {filename, document, conversationId})
 
     const s3Client = new S3Client({ 
       region: 'eu-west-1',
@@ -56,10 +53,10 @@ export async function POST(
     }
 
     const fileBuffer = await document?.arrayBuffer(); // convert back to arrayBuffer 
-
+    const fileFullName = `${conversationId}_${filename}`
     const params = {
       Bucket: 'licenta-cezar',
-      Key: filename,
+      Key: fileFullName,
       Body: fileBuffer,
     };
     console.log(params)

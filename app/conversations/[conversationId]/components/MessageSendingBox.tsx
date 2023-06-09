@@ -48,6 +48,7 @@ const MessageSendingBox = () => {
       <DocumentModal
           isOpen={isModalOpen}
           closeModal={closeModal}
+          conversationId={conversationId}
         />
       <form className="flex gap-2 items-center w-full" onSubmit={handleSubmit(onSubmit)}>
         <MessageInput id="message" register={register} errors={errors} required placeholder="Scrie un mesaj" />

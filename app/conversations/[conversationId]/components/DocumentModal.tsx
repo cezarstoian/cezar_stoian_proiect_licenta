@@ -10,6 +10,7 @@ import { UploadedFile } from '@/app/types';
 interface DocumentModalProps {
   isOpen: boolean,
   closeModal: any,
+  conversationId: string,
 }
 
 const customStyles = {
@@ -26,7 +27,8 @@ const customStyles = {
 
 const DocumentModal: React.FC<DocumentModalProps> = ({
   isOpen, 
-  closeModal, 
+  closeModal,
+  conversationId,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [bufferFiles, setBufferFiles] = useState<Buffer[]>([])
@@ -36,10 +38,11 @@ const DocumentModal: React.FC<DocumentModalProps> = ({
     setBufferFiles([])
   }
 
-  const fileUpload = (filename: string, document: ArrayBuffer) => {
+  const fileUpload = (filename: string, document: ArrayBuffer, conversationId: string) => {
     const formData = new FormData();
-    formData.append("filename", filename);
-    formData.append("document", new Blob([document])); // convert arrayBuffer to blob
+    formData.append("filename", filename)
+    formData.append("conversationId", conversationId)
+    formData.append("document", new Blob([document])) // convert arrayBuffer to blob
 
     axios.post('/api/aws', formData, {
       headers: {
@@ -47,9 +50,18 @@ const DocumentModal: React.FC<DocumentModalProps> = ({
       },
     })
     .then(() => toast.success('Fisier incarcat'))
-    .catch((err) => {toast.error('ceva wrong')
-    console.log(err)
-   })
+    .catch(() => toast.error('Ceva nu a funcționat la trimiterea fișierului'))
+
+    const message = null
+    const messageBody = { message, filename, conversationId}
+
+    axios.post('/api/messages', messageBody)
+    .then(() => {
+      toast.success('Mesaj creat')
+      fileReset()
+    })
+    .catch(() => toast.error('Ceva nu a funcționat la crearea mesajului'))
+    .finally(closeModal)
   }
 
   const onDrop = (acceptedFiles: any) => {
@@ -95,8 +107,8 @@ const DocumentModal: React.FC<DocumentModalProps> = ({
           )}
         </div>
         <div className="flex space-x-4">
-          <button onClick={() => fileReset()} className="px-4 py-2 bg-red-500 text-white rounded-md">Resetează fișierele</button>
-          <button onClick={() => fileUpload(uploadedFiles[0].name, bufferFiles)} className="px-4 py-2 bg-green-500 text-white rounded-md">Uploadează fișierele</button>
+          <button onClick={() => fileReset()} className="px-4 py-2 bg-red-500 text-white rounded-md">Resetează fișierul</button>
+          <button onClick={() => fileUpload(uploadedFiles[0].name, bufferFiles, conversationId)} className="px-4 py-2 bg-green-500 text-white rounded-md">Trimite fișierul</button>
           <button onClick={closeModal} className="px-4 py-2 bg-blue-500 text-white rounded-md">X Închide fereastra</button>
         </div>
       </div>

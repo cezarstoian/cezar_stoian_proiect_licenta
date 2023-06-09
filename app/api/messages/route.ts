@@ -11,7 +11,7 @@ export async function  POST(
     const body = await request.json()
     const {
       message,
-      document,
+      filename,
       conversationId,
     } = body
 
@@ -20,7 +20,7 @@ export async function  POST(
     const newMessage = await prisma.message.create({
       data: {
         body: message,
-        document: document,
+        document: filename,
         conversation: {
           connect: {
             id: conversationId
