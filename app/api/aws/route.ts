@@ -3,26 +3,6 @@ import { UploadedFile } from "@/app/types";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-// does not work in API form
-// API to download a file from AWS S3
-// export async function GET(
-//   request: Request,
-//   { params }: { params: IParams }
-// ) {
-//   try {
-//     const { filename } = params
-
-//     const fileUrl = `https://licenta-cezar.s3.eu-west-1.amazonaws.com/${filename}`
-//     console.log(fileUrl)
-
-//     saveAs(fileUrl, filename)
-
-//     return NextResponse.json('File Saved')
-//   } catch (err) {
-//     console.log("File Download error", err)
-//     return new NextResponse('Internal Error', { status: 500 })
-//   }
-// }
 
 // API to upload a file to AWS S3
 export async function POST(
@@ -58,6 +38,7 @@ export async function POST(
       Bucket: 'licenta-cezar',
       Key: fileFullName,
       Body: fileBuffer,
+      ACL: 'public-read',
     };
     console.log(params)
 
