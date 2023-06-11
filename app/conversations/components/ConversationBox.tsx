@@ -33,14 +33,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     return messages[messages.length - 1]
   }, [data.conversation.messages])
 
-  const seen = useMemo(() => {
-    if (!lastMessage) return false
-
-    if (!userEmail) return false
-
-    return lastMessage.seen
-  }, [userEmail, lastMessage])
-
   const lastMessageText = useMemo(() => {
     if (lastMessage?.document) return lastMessage.document
 
@@ -79,12 +71,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
               </p>
             )}
           </div>
-          <p className={clsx(`
+          <p className="
               truncate 
               text-sm
-              `,
-              seen ? 'text-gray-500' : 'text-black font-medium'
-            )}>
+              "
+            >
             {lastMessageText}
           </p>
         </div>

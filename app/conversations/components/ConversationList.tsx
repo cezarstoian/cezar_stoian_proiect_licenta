@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaExclamationCircle } from 'react-icons/fa';
 import ConversationBox from "./ConversationBox";
+import NewCaseModal from "./NewCaseModal";
 // import saveAs from "file-saver";
 // import axios from "axios";
 
@@ -18,18 +19,19 @@ interface ConversationListProps {
 const ConversationList: React.FC<ConversationListProps> = ({
   initialItems
 }) => {
-  //   const handleDownloadButtonClick = async (filename: string) => {
-  //   try {
-  //     axios.get(`/api/aws/${filename}`)
-  //   } catch (err) {
-  //     console.error('Error downloading file from S3:', err);
-  //   }
-  // }
   const [items, setItems] = useState(initialItems)
 
-  const router = useRouter()
-
   const { conversationId, isOpen } = useConversation()
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <aside className={clsx(`
@@ -50,10 +52,14 @@ const ConversationList: React.FC<ConversationListProps> = ({
           <div className="text-xl font-bold text-neutral-800">
             Cazuri
           </div>
-          <button className="flex items-center text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button onClick={() => openModal()} className="flex items-center text-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             <FaExclamationCircle className="mr-2" />
-            Deschide un nou caz 
+            Deschide un nou caz
           </button>
+          <NewCaseModal
+            isOpen={isModalOpen}
+            closeModal={closeModal}
+          />
         </div>
         {(items.length !== 0) ? (items.map((item) => (
           <ConversationBox 
@@ -65,7 +71,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
           Niciun caz deschis
         </div>)}
       </div>
-      {/* <button onClick={() => handleDownloadButtonClick('logo.png')}>Press</button> */}
     </aside>
   )
 }

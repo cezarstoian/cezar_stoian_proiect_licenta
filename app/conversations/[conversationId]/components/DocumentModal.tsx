@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import axios from "axios";
 import { toast } from "react-hot-toast";
