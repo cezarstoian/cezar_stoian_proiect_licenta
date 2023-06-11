@@ -18,20 +18,7 @@ const UserListVerify: React.FC<UserListVerifyProps> = ({
 }) => {
 
   return ( 
-    <aside 
-      className="
-        fixed 
-        inset-y-0 
-        pb-20
-        lg:pb-0
-        lg:w-80 
-        lg:block
-        overflow-y-auto 
-        border-r 
-        border-gray-800
-        block w-full left-0
-      "
-    >
+    <div>
       <div className="px-5 flex flex-col">
         <div className="flex-grow">
           <div 
@@ -65,7 +52,7 @@ const UserListVerify: React.FC<UserListVerifyProps> = ({
       <div className="fixed bottom-0 px-5">
         <IconLink icon={HiArrowLeftOnRectangle} href={'/admin'} text={'Înapoi la pagina de administrare'} />  
       </div>
-    </aside>
+    </div>
   );
 }
 export default UserListVerify;

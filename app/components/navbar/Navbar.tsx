@@ -4,8 +4,12 @@ import { BsFillChatDotsFill } from "react-icons/bs"
 import IconLink from "../IconLink";
 import Image from 'next/image';
 
-const Navbar = ({
+interface NavbarProps {
+  page: string;
+}
 
+const Navbar: React.FC<NavbarProps>= ({
+  page,
 }) => {
   return (
     <div className="
@@ -26,12 +30,14 @@ const Navbar = ({
             group 
             flex 
             gap-x-3 
-            rounded-md 
+            rounded-xl 
             p-3 
             leading-6 
             font-semibold 
             text-lg
-          `,
+            text-custom-purple
+            hover:bg-gray-100
+          `, page === 'home' ? 'bg-gray-200' : 'bg-white'
           )}
       >De ce noi?</Link>
       <Link
@@ -40,12 +46,14 @@ const Navbar = ({
             group 
             flex 
             gap-x-3 
-            rounded-md 
+            rounded-lg 
             p-3 
             text-lg
             leading-6 
             font-semibold
-          `,
+            text-custom-purple
+            hover:bg-gray-100
+          `, page === 'prices' ? 'bg-gray-200' : 'bg-white'
           )}
       >Tarife</Link>
       <Link
@@ -54,12 +62,14 @@ const Navbar = ({
             group 
             flex 
             gap-x-3 
-            rounded-md 
+            rounded-lg 
             p-3 
             text-lg
             leading-6 
-            font-semibold 
-          `,
+            font-semibold
+            text-custom-purple
+            hover:bg-gray-100
+          `, page === 'about' ? 'bg-gray-200' : 'bg-white'
           )}
       >Despre noi</Link>
       <IconLink icon={BsFillChatDotsFill} href={'/login'} />        

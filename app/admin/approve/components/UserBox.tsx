@@ -31,53 +31,49 @@ const UserBoxVerify: React.FC<UserBoxVerifyProps> = ({
     router.refresh();
   };
 
-  const handleClick = useCallback(() => {
-    setIsLoading(true);
-  }, []);
-
   return (
     <div>
-      <div
-        onClick={handleClick}
-        className="
-          w-full 
-          relative 
-          flex 
-          items-center 
-          space-x-3 
-          bg-white 
-          p-3 
-          hover:bg-neutral-100
-          rounded-lg
-          transition
-          cursor-pointer
-        "
-      >
-        <Avatar user={data} />
-        <div className="min-w-0 flex-1">
-          <div className="focus:outline-none">
-            <span className="absolute inset-0" aria-hidden="true" />
-            <div className="flex justify-between items-center mb-1">
-              <p className="text-sm font-medium text-gray-900">
-                {data.name}
-              </p>
+      <div className="flex items-center">
+        <div
+          className=" 
+            relative 
+            flex 
+            items-center 
+            space-x-3 
+            bg-white 
+            p-3
+            w-full
+            rounded-lg
+            transition
+          "
+        >
+          <Avatar user={data} />
+          <div className="min-w-0 flex-1">
+            <div className="focus:outline-none">
+              <span className="absolute inset-0" aria-hidden="true" />
+              <div className="flex justify-between items-center mb-1">
+                <p className="text-sm font-medium text-gray-900">
+                  {data.name} ({data.email})
+                </p>
+              </div>
             </div>
           </div>
+          
         </div>
-        
+        <div className="border border-gray-500 rounded px-3 py-1">
+          <button onClick={() => openModal(data)}>Verifică utilizatorul</button>
+        </div>
+        {selectedUser && (
+          <UserModal
+            user={selectedUser}
+            isOpen={isModalOpen}
+            closeModal={closeModal}
+          />
+        )}
       </div>
-      <div>
-        <button onClick={() => openModal(data)}>Verifică utilizatorul</button>
-      </div>
-      {selectedUser && (
-        <UserModal
-          user={selectedUser}
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-        />
-      )}
+      <hr className="w-full border-gray-300 my-4" />
+
     </div>
-      
   );
 }
  
