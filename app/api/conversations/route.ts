@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
 import getLeastCasesAccountant from "@/app/actions/getLeastCasesAccountant";
+import { pusherServer } from "@/app/libs/pusher";
 
 // API to create a new conversation/case
 export async function POST(
@@ -53,6 +54,7 @@ export async function POST(
       }
       return NextResponse.json(response)
     } 
+
     return new NextResponse('Internal Error', { status: 500 });
   } catch (err) {
     console.log("Conversation creation error", err)

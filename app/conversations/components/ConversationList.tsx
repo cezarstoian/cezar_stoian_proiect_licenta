@@ -1,16 +1,14 @@
 'use client';
 
 import useConversation from "@/app/hooks/useConversation";
-import { ConversationOnUserExtraType } from "@/app/types";
-import { Conversation } from "@prisma/client";
+import { ConversationExtraType, ConversationOnUserExtraType } from "@/app/types";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaExclamationCircle } from 'react-icons/fa';
 import ConversationBox from "./ConversationBox";
 import NewCaseModal from "./NewCaseModal";
-// import saveAs from "file-saver";
-// import axios from "axios";
+import { pusherClient } from "@/app/libs/pusher";
+import { useSession } from "next-auth/react";
 
 interface ConversationListProps {
   initialItems: ConversationOnUserExtraType[],
@@ -18,7 +16,9 @@ interface ConversationListProps {
 
 const ConversationList: React.FC<ConversationListProps> = ({
   initialItems
-}) => {
+}) => {  
+  const session = useSession();
+
   const [items, setItems] = useState(initialItems)
 
   const { conversationId, isOpen } = useConversation()
@@ -32,6 +32,34 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const pusherKey = useMemo(() => {
+    return session.data?.user?.email
+  }, [session.data?.user?.email])
+
+  useEffect(() => {
+    if (!pusherKey) {
+      return
+    }
+    pusherClient.subscribe(pusherKey)
+
+    const updateHandler = (conversation: ConversationExtraType) => {
+      setItems((current) => current.map((currentConversation) => {
+        if (currentConversation.conversationId === conversation.id) {
+          currentConversation.conversation.messages.push(conversation.messages[0])
+          console.log(conversation)
+        }
+        return currentConversation
+      }));
+    }
+
+    pusherClient.bind('conversation:update', updateHandler)
+
+    return () => {
+      pusherClient.unsubscribe(pusherKey)
+      pusherClient.unbind('conversation:update', updateHandler)
+    }
+  }, [pusherKey]);
 
   return (
     <aside className={clsx(`
