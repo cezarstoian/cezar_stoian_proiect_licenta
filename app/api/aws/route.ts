@@ -21,8 +21,8 @@ export async function POST(
     const s3Client = new S3Client({ 
       region: 'eu-west-1',
       credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY || '',
-        secretAccessKey: process.env.AWS_KEY_SECRET || '',
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_KEY_ID || '',
       },
     });
 
