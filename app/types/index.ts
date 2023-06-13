@@ -1,5 +1,4 @@
 import { Conversation, Message, User, ConversationsOnUsers } from "@prisma/client";
-import { Data } from "aws-sdk/clients/firehose";
 
 export type ConversationExtraType = Conversation & {
   messages: Message[],
@@ -21,4 +20,8 @@ export type UploadedFile = {
   name: string,
   size: number,
   type: string,
+}
+
+export type FormDataEntryValueExtraType = FormDataEntryValue & {
+  arrayBuffer: () => Promise<ArrayBuffer>;
 }

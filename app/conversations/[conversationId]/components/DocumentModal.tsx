@@ -34,15 +34,19 @@ const DocumentModal: React.FC<DocumentModalProps> = ({
   const [bufferFiles, setBufferFiles] = useState<Buffer[]>([])
 
   const fileReset = () => {
-    setUploadedFiles([])
-    setBufferFiles([])
-  }
+    setUploadedFiles([]);
+    setBufferFiles([]);
+  };
 
-  const fileUpload = (filename: string, document: ArrayBuffer, conversationId: string) => {
-    const formData = new FormData();
+  const fileUpload = (filename: string, document: Buffer[], conversationId: string) => {
+    const fileBuffer = Buffer.concat(document) // Concatenate the buffers into a single buffer
+    const uint8Array = new Uint8Array(fileBuffer) // Convert the buffer to Uint8Array
+    const buffers = uint8Array.buffer // Get the underlying ArrayBuffer from the Uint8Array
+
+    const formData = new FormData()
     formData.append("filename", filename)
     formData.append("conversationId", conversationId)
-    formData.append("document", new Blob([document])) // convert arrayBuffer to blob
+    formData.append("document", new Blob([buffers])) // convert arrayBuffer to blob
 
     axios.post('/api/aws', formData, {
       headers: {
@@ -66,17 +70,20 @@ const DocumentModal: React.FC<DocumentModalProps> = ({
 
   const onDrop = (acceptedFiles: any) => {
     setUploadedFiles(acceptedFiles)
-
+  
     acceptedFiles.forEach((file: any) => {
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = () => {
-        const buffer = reader.result;
-        console.log('Buffer', buffer);
-        setBufferFiles(buffer)
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  };
+        const buffer = reader.result
+        console.log('Buffer', buffer)
+        if (buffer !== null && buffer instanceof ArrayBuffer) {
+          const newBuffer = Buffer.from(buffer)
+          setBufferFiles((prevBufferFiles) => [...prevBufferFiles, newBuffer])
+        }
+      }
+      reader.readAsArrayBuffer(file)
+    })
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
