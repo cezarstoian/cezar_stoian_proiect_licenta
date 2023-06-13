@@ -17,12 +17,6 @@ const useRoutes = () => {
       icon: HiChat,
       active: pathname === '/conversations' || !!conversationId
     },
-    // { 
-    //   label: 'Users', 
-    //   href: '/users', 
-    //   icon: HiUsers, 
-    //   active: pathname === '/users'
-    // },
     {
       label: 'Admin',
       href: '/admin',
