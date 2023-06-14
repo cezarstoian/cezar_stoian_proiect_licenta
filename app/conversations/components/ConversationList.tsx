@@ -33,34 +33,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
     setIsModalOpen(false);
   };
 
-  const pusherKey = useMemo(() => {
-    return session.data?.user?.email
-  }, [session.data?.user?.email])
-
-  useEffect(() => {
-    if (!pusherKey) {
-      return
-    }
-    pusherClient.subscribe(pusherKey)
-
-    const updateHandler = (conversation: ConversationExtraType) => {
-      setItems((current) => current.map((currentConversation) => {
-        if (currentConversation.conversationId === conversation.id) {
-          currentConversation.conversation.messages.push(conversation.messages[0])
-          console.log(conversation)
-        }
-        return currentConversation
-      }));
-    }
-
-    pusherClient.bind('conversation:update', updateHandler)
-
-    return () => {
-      pusherClient.unsubscribe(pusherKey)
-      pusherClient.unbind('conversation:update', updateHandler)
-    }
-  }, [pusherKey]);
-
   return (
     <aside className={clsx(`
       fixed 

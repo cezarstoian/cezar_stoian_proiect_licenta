@@ -62,14 +62,6 @@ export async function  POST(
 
     await pusherServer.trigger(conversationId, 'messages:new', newMessage)
 
-    const lastMessage = conversationUpdate.messages[conversationUpdate.messages.length - 1]
-    conversationUpdate.users.map((user) => {
-      pusherServer.trigger(user.user.email!, 'conversation:update', {
-        id: conversationId,
-        messages: [lastMessage]
-      })
-    })
-
     return NextResponse.json(newMessage)
   } catch (err) {
     console.log("Message creation error", err)
