@@ -33,7 +33,7 @@ export async function POST(
       },
       To: [
         {
-          Email: 'cezarstoian@gmail.com',
+          Email: user.email,
           Name: user.name,
         },
       ],
